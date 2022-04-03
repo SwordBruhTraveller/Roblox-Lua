@@ -1,0 +1,3 @@
+-- Made by SwordBTraveller
+-- CFrame Teleport
+loadstring(game:HttpGet("https://pastebin.com/raw/rRQ4G25V"))()
