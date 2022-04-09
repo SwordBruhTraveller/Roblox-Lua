@@ -127,97 +127,89 @@ Title.TextSize = 34.000
 UICorner_5.CornerRadius = UDim.new(0, 12)
 UICorner_5.Parent = Title
 
--- Scripts:
+-- Services
+local TweenService = game:GetService('TweenService')
+local UIS = game:GetService('UserInputService')
 
-local function ZZRKN_fake_script() -- Fly.Configuration 
-	local script = Instance.new('LocalScript', Fly)
+local Players = game:GetService('Players')
+local Player = Players.LocalPlayer
+local Mouse = Player:GetMouse()
 
-	-- Services
-	local TweenService = game:GetService('TweenService')
-	local UIS = game:GetService('UserInputService')
-	
-	local Players = game:GetService('Players')
-	local Player = Players.LocalPlayer
-	local Mouse = Player:GetMouse()
-	
-	-- Variables
-	local FlyBool = false
-	
-	-- Functions
-	FlyButton.MouseButton1Click:Connect(function()
-		local Character = Player.Character
-		local CharacterParts = {
-			Head = Character.Head,
-			Torso = Character.Torso,
-			RArm = Character:FindFirstChild("Right Arm"),
-			LArm = Character:FindFirstChild("Left Arm"),
-			Rleg = Character:FindFirstChild("Right Leg"),
-			LLeg = Character:FindFirstChild("Left Leg"),
-			HumRp = Character.HumanoidRootPart,
-			Hum = Character.Humanoid,
-		}
-		if FlyBool == false then
-			FlyButton.Text = "Fly [ON]"
-			delay(.005,function()
-				CharacterParts.HumRp.Anchored = true
-			end)
-			UIS.InputBegan:Connect(function(Input,Typing)
-				if Typing then return end
-				-- Forward
-				if UIS:IsKeyDown(Enum.KeyCode.W) then
-					repeat wait()
-						CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, -1)
-						if not UIS:IsKeyDown(Enum.KeyCode.W) then
-							return
-						end
-					until not UIS:IsKeyDown(Enum.KeyCode.W)
-				end
-				
-				-- Backwards
-				if UIS:IsKeyDown(Enum.KeyCode.S) then
-					repeat wait()
-						CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, (1/2))
-						if not UIS:IsKeyDown(Enum.KeyCode.S) then
-							return
-						end
-					until not UIS:IsKeyDown(Enum.KeyCode.S)
-				end
-	
-				-- Left
-				if UIS:IsKeyDown(Enum.KeyCode.A) then
-					repeat wait()
-						CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(-1, 0, 0)
-						if not UIS:IsKeyDown(Enum.KeyCode.A) then
-							return
-						end
-					until not UIS:IsKeyDown(Enum.KeyCode.A)
-				end
-				
-				-- Right
-				if UIS:IsKeyDown(Enum.KeyCode.D) then
-					repeat wait()
-						CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(1, 0, 0)
-						if not UIS:IsKeyDown(Enum.KeyCode.D) then
-							return
-						end
-					until not UIS:IsKeyDown(Enum.KeyCode.D)
-				end
-				
-				game:GetService('RunService').Heartbeat:Connect(function()
-					if FlyBool == true then
-						CharacterParts.HumRp.CFrame = CFrame.lookAt(CharacterParts.HumRp.Position, Vector3.new(Mouse.Hit.Position.X, Mouse.Hit.Position.Y, Mouse.Hit.Position.Z))
+-- Variables
+local FlyBool = false
+
+-- Functions
+Fly.MouseButton1Click:Connect(function()
+	local Character = Player.Character
+	local CharacterParts = {
+		Head = Character.Head,
+		Torso = Character.Torso,
+		RArm = Character:FindFirstChild("Right Arm"),
+		LArm = Character:FindFirstChild("Left Arm"),
+		Rleg = Character:FindFirstChild("Right Leg"),
+		LLeg = Character:FindFirstChild("Left Leg"),
+		HumRp = Character.HumanoidRootPart,
+		Hum = Character.Humanoid,
+	}
+	if FlyBool == false then
+		Fly.Text = "Fly [ON]"
+		delay(.005,function()
+			CharacterParts.HumRp.Anchored = true
+		end)
+		UIS.InputBegan:Connect(function(Input,Typing)
+			if Typing then return end
+			-- Forward
+			if UIS:IsKeyDown(Enum.KeyCode.W) then
+				repeat wait()
+					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, -1)
+					if not UIS:IsKeyDown(Enum.KeyCode.W) then
+						return
 					end
-				end)
-			end)
-	
-			FlyBool = true
-		else
-			FlyButton.Text = "Fly [OFF]"
+				until not UIS:IsKeyDown(Enum.KeyCode.W)
+			end
 
-			CharacterParts.HumRp.Anchored = false
-	
-			FlyBool = false
-		end
-	end)
-end
-coroutine.wrap(ZZRKN_fake_script)()
+			-- Backwards
+			if UIS:IsKeyDown(Enum.KeyCode.S) then
+				repeat wait()
+					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, (1/2))
+					if not UIS:IsKeyDown(Enum.KeyCode.S) then
+						return
+					end
+				until not UIS:IsKeyDown(Enum.KeyCode.S)
+			end
+
+			-- Left
+			if UIS:IsKeyDown(Enum.KeyCode.A) then
+				repeat wait()
+					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(-1, 0, 0)
+					if not UIS:IsKeyDown(Enum.KeyCode.A) then
+						return
+					end
+				until not UIS:IsKeyDown(Enum.KeyCode.A)
+			end
+
+			-- Right
+			if UIS:IsKeyDown(Enum.KeyCode.D) then
+				repeat wait()
+					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(1, 0, 0)
+					if not UIS:IsKeyDown(Enum.KeyCode.D) then
+						return
+					end
+				until not UIS:IsKeyDown(Enum.KeyCode.D)
+			end
+
+			game:GetService('RunService').Heartbeat:Connect(function()
+				if FlyBool == true then
+					CharacterParts.HumRp.CFrame = CFrame.lookAt(CharacterParts.HumRp.Position, Vector3.new(Mouse.Hit.Position.X, Mouse.Hit.Position.Y, Mouse.Hit.Position.Z))
+				end
+			end)
+		end)
+
+		FlyBool = true
+	else
+		Fly.Text = "Fly [OFF]"
+		CharacterParts.HumRp.Anchored = false
+
+		FlyBool = false
+	end
+end)
