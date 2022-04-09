@@ -137,6 +137,7 @@ local Mouse = Player:GetMouse()
 
 -- Variables
 local FlyBool = false
+local Number = -1
 
 -- Functions
 Fly.MouseButton1Click:Connect(function()
@@ -161,41 +162,11 @@ Fly.MouseButton1Click:Connect(function()
 			-- Forward
 			if UIS:IsKeyDown(Enum.KeyCode.W) then
 				repeat wait()
-					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, -1)
+					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, Number)
 					if not UIS:IsKeyDown(Enum.KeyCode.W) then
 						return
 					end
 				until not UIS:IsKeyDown(Enum.KeyCode.W)
-			end
-
-			-- Backwards
-			if UIS:IsKeyDown(Enum.KeyCode.S) then
-				repeat wait()
-					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(0, 0, (1/2))
-					if not UIS:IsKeyDown(Enum.KeyCode.S) then
-						return
-					end
-				until not UIS:IsKeyDown(Enum.KeyCode.S)
-			end
-
-			-- Left
-			if UIS:IsKeyDown(Enum.KeyCode.A) then
-				repeat wait()
-					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(-1, 0, 0)
-					if not UIS:IsKeyDown(Enum.KeyCode.A) then
-						return
-					end
-				until not UIS:IsKeyDown(Enum.KeyCode.A)
-			end
-
-			-- Right
-			if UIS:IsKeyDown(Enum.KeyCode.D) then
-				repeat wait()
-					CharacterParts.HumRp.CFrame = CharacterParts.HumRp.CFrame * CFrame.new(1, 0, 0)
-					if not UIS:IsKeyDown(Enum.KeyCode.D) then
-						return
-					end
-				until not UIS:IsKeyDown(Enum.KeyCode.D)
 			end
 
 			game:GetService('RunService').Heartbeat:Connect(function()
