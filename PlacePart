@@ -1,0 +1,131 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local PartSpawn = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local TextBox1 = Instance.new("TextBox")
+local TextLabel = Instance.new("TextLabel")
+local TextBox2 = Instance.new("TextBox")
+local TextLabel_2 = Instance.new("TextLabel")
+
+--Properties:
+
+PartSpawn.Name = "PartSpawn"
+PartSpawn.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+PartSpawn.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Main.Name = "Main"
+Main.Parent = PartSpawn
+Main.Active = true
+Main.AnchorPoint = Vector2.new(0.5, 0.5)
+Main.BackgroundColor3 = Color3.fromRGB(52, 52, 52)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.18708308, 0, 0.778481007, 0)
+Main.Size = UDim2.new(0, 344, 0, 65)
+
+TextBox1.Name = "TextBox1"
+TextBox1.Parent = Main
+TextBox1.AnchorPoint = Vector2.new(0.5, 0.5)
+TextBox1.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+TextBox1.BackgroundTransparency = 0.750
+TextBox1.BorderSizePixel = 0
+TextBox1.Position = UDim2.new(0.774709284, 0, 0.490769267, 0)
+TextBox1.Size = UDim2.new(0, 115, 0, 50)
+TextBox1.Font = Enum.Font.SourceSans
+TextBox1.Text = ""
+TextBox1.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox1.TextSize = 14.000
+
+TextLabel.Parent = TextBox1
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(-0.37391305, 0, -0.300000012, 0)
+TextLabel.Size = UDim2.new(0, 200, 0, 50)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "Size"
+TextLabel.TextColor3 = Color3.fromRGB(84, 152, 255)
+TextLabel.TextSize = 14.000
+
+TextBox2.Name = "TextBox2"
+TextBox2.Parent = Main
+TextBox2.AnchorPoint = Vector2.new(0.5, 0.5)
+TextBox2.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+TextBox2.BackgroundTransparency = 0.750
+TextBox2.BorderSizePixel = 0
+TextBox2.Position = UDim2.new(0.225290701, 0, 0.490769267, 0)
+TextBox2.Size = UDim2.new(0, 115, 0, 50)
+TextBox2.Font = Enum.Font.SourceSans
+TextBox2.Text = ""
+TextBox2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox2.TextSize = 14.000
+
+TextLabel_2.Parent = TextBox2
+TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_2.BackgroundTransparency = 1.000
+TextLabel_2.BorderSizePixel = 0
+TextLabel_2.Position = UDim2.new(-0.37391305, 0, -0.300000012, 0)
+TextLabel_2.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_2.Font = Enum.Font.SourceSans
+TextLabel_2.Text = "Cooldown"
+TextLabel_2.TextColor3 = Color3.fromRGB(84, 152, 255)
+TextLabel_2.TextSize = 14.000
+
+-- Services
+local camera = workspace.CurrentCamera
+
+local Players = game:GetService('Players')
+local Replicated = game:GetService('ReplicatedStorage')
+local TweenService = game:GetService('TweenService')
+local RunService = game:GetService('RunService')
+
+local UIS = game:GetService('UserInputService')
+
+-- Character
+local Player = Players.LocalPlayer
+local character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = character:WaitForChild('Humanoid')
+local Animator = Humanoid:WaitForChild('Animator')
+local RootPart = character:WaitForChild('HumanoidRootPart')
+
+local Mouse = Player:GetMouse()
+
+-- Code
+
+local Pressed = false
+local Number1 = 5
+local Number2 = 2
+
+
+local Part = nil
+UIS.InputBegan:Connect(function(Input,Typing)
+	if Input.KeyCode == Enum.KeyCode.J and not Typing and Pressed == false then
+		Pressed = true
+		Part = Instance.new('Part',character)
+		Part.Size = Vector3.new(Number1, 1, Number1)
+		Part.CFrame = (RootPart.CFrame * CFrame.new(0, -3.65, 0))
+		Part.Anchored = true
+		Part.Transparency = 0.1
+		Part.CanCollide = true
+		TweenService:Create(Part,TweenInfo.new(Number2,Enum.EasingStyle.Quad,Enum.EasingDirection.InOut),{Transparency = 1}):Play()
+		task.wait(Number2)
+		Part:Destroy()
+		Pressed = false
+	end
+end)
+
+TextBox1.FocusLost:Connect(function(enterPressed)
+	if enterPressed then
+		Number1 = tonumber(TextBox1.Text)
+		print(Number1)
+	end
+end)
+
+TextBox2.FocusLost:Connect(function(enterPressed)
+	if enterPressed then
+		Number2 = tonumber(TextBox2.Text)
+		print(Number2)
+	end
+end)
