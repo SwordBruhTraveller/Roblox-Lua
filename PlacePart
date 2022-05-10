@@ -20,7 +20,7 @@ local Mouse = Player:GetMouse()
 -- Code
 
 local Pressed = false
-local Number1 = 7
+local Number1 = 2
 local Number2 = 5
 
 local Part = nil
