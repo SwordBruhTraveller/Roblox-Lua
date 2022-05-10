@@ -21,7 +21,7 @@ local Mouse = Player:GetMouse()
 
 local Pressed = false
 local Number1 = 2
-local Number2 = 5
+local Number2 = 2
 
 local Part = nil
 UIS.InputBegan:Connect(function(Input,Typing)
