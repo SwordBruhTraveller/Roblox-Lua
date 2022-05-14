@@ -1,0 +1,107 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/SwordBruhTraveller/Roblox-Lua/main/PlacePart5",true))()
+game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 34.318748474121094
+print(game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower, game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed)
+
+-- Services
+local camera = workspace.CurrentCamera
+
+local Players = game:GetService('Players')
+local Replicated = game:GetService('ReplicatedStorage')
+local TweenService = game:GetService('TweenService')
+local RunService = game:GetService('RunService')
+
+local UIS = game:GetService('UserInputService')
+
+-- Character
+local Player = Players.LocalPlayer
+local character = Player.Character or Player.CharacterAdded:Wait()
+local Humanoid = character:WaitForChild('Humanoid')
+local Animator = Humanoid:WaitForChild('Animator')
+local RootPart = character:WaitForChild('HumanoidRootPart')
+
+local ABC = (Humanoid.WalkSpeed + 2.5)
+local walkSpeed = ABC
+local SprintSpeed = (Humanoid.WalkSpeed + 10)
+
+local gmt = getrawmetatable(game)
+
+setreadonly(gmt, false)
+
+local oldindex = gmt.__index
+
+gmt.__index = newcclosure(function(self,b)
+
+    if b == "WalkSpeed" then
+
+        return 16
+
+    end
+
+    return oldindex(self,b)
+
+end)
+local Previous = nil
+
+local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+
+UIS.InputBegan:connect(function(UserInput)
+    while true do
+        if UIS:IsKeyDown(Enum.KeyCode.V) then
+            game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = SprintSpeed
+            wait(0.111)
+        else
+            game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = walkSpeed
+            wait(0.111)
+        end
+    end
+end)
+
+Humanoid.HealthChanged:Connect(function(health)
+    walkSpeed = (ABC + 73)
+    print(walkSpeed)
+    repeat
+        wait(.1)
+        Humanoid.WalkSpeed = walkSpeed
+        print(Humanoid.WalkSpeed)
+    until Previous == health or health == 0
+    wait(2)
+    Previous = health
+    walkSpeed = ABC
+end)
+
+local INFJump = true
+_G.JumpHeight = 34.318748474121094;
+
+function Action(Object, Function) if Object ~= nil then Function(Object); end end
+
+UIS.InputBegan:connect(function(UserInput,Typing)
+    if UserInput.KeyCode == Enum.KeyCode.N then
+        if INFJump == true then
+            INFJump = false
+        else
+            INFJump = true
+        end
+    end
+end)
+
+UIS.InputBegan:connect(function(UserInput,Typing)
+    if INFJump == true then
+    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space and not Typing then
+        Action(Player.Character.Humanoid, function(self)
+            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                Action(self.Parent.HumanoidRootPart, function(self)
+                    print(walkSpeed)
+                    self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                end)
+            end
+        end)
+    end
+    end
+end)
+
+-- PartCreate
+Player.CharacterAdded:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/SwordBruhTraveller/Roblox-Lua/main/PlacePart5",true))()
+    game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 34.318748474121094
+end)
